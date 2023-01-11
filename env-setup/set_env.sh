@@ -1,7 +1,8 @@
 #!/bin/bash
-gcloud config set project data-pipeline-interactive
+read -p 'Please input ProjectID: ' projectid
+#gcloud config set project data-pipeline-interactive
 export TEST='test'
-export GCP_PROJECT_ID='data-pipeline-interactive'
+export GCP_PROJECT_ID="${projectid}"
 export PROJECT_NUMBER=$(gcloud projects describe "${GCP_PROJECT_ID}" --format='get(projectNumber)')
 export BQ_DATASET_TEST="pipeline_${TEST}"
 
