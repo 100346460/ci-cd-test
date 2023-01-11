@@ -1,0 +1,8 @@
+{
+  "gcp_project": "${GCP_PROJECT_ID}",
+  "gcp_region": "${COMPOSER_REGION}",
+  "gcp_zone": "${COMPOSER_ZONE_ID}",
+  "pubsub_topic": "${PUBSUB_TOPIC}",
+  "bq_dataset_test": "${BQ_DATASET_TEST}",
+  "bq_dataset_prod": "${BQ_DATASET_PROD}"
+}
