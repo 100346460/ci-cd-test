@@ -1,7 +1,9 @@
 steps:
   - name: gcr.io/cloud-builders/git
-    args: ['clone', 'https://source.developers.google.com/p/data-pipeline-interactive/r/ci-cd-test']
+    args: ['clone', 'https://github.com/100346460/ci-cd-test.git']
     id: 'check-out-source-code'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t','us-central1-docker.pkg.dev/valid-hall-374418/ci-cd-dbt:latest', '-f', '/ci-cd-test/dbt-source/dbt_project/Dockerfile', '.'] 
   - name: 'apache/airflow:slim-2.3.1-python3.7'
     entrypoint: 'python'
     args: ['test_basic_unittest.py']
@@ -18,3 +20,4 @@ steps:
     dir: '$_REPO_NAME/build-pipeline'
     id: 'wait-for-dag-deployed-on-composer'
   
+images: [us-central1-docker.pkg.dev/valid-hall-374418/ci-cd-dbt:latest]  
