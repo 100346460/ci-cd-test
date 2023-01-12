@@ -18,7 +18,7 @@ ENV PATH /env/bin:$PATH
 #RUN pip install -r /app/requirements.txt
 
 # Add the application source code.
-COPY ./dbt-source/dbt_project .
+COPY . .
 
 RUN dbt debug --config-dir
 
