@@ -5,7 +5,7 @@ WORKDIR dbt_project
 # Create a virtualenv for dependencies. This isolates these packages from
 # system-level packages.
 # Use -p python3 or -p python3.7 to select python version. Default is version 2.
-RUN virtualenv /env -p 3.9.2
+RUN virtualenv /env -p python3.7
 
 # Setting these environment variables are the same as running
 # source /env/bin/activate.
