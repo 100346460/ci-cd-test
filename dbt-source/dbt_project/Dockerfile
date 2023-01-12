@@ -26,6 +26,6 @@ CMD ["dbt"]
 
 ARG USER=gdap
 RUN adduser ${USER} --disabled-password \
-&& chwon ${USER}:${USER} -R . 
+&& chown ${USER}:${USER} -R . 
 
 
