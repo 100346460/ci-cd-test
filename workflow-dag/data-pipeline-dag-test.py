@@ -34,8 +34,9 @@ def my_func():
     print("Hello :)")
 
 with models.DAG(
-    'test_word_count',
+    'test-dbt-dag',
     schedule_interval=None) as dag:
+    
     python_task = PythonOperator(
     task_id='execute_my_func',
     python_callable=my_func,
@@ -49,7 +50,8 @@ with models.DAG(
         image='us-central1-docker.pkg.dev/data-pipeline-interactive/ci-cd-test/ci-cd-dbt:latest',
         cmds=['/bin/bash',"-c","dbt run --profiles-dir ."],
         image_pull_policy="Always",
-        get_logs=True
+        get_logs=True,
+        start_date=yesterday
    )
   
     publish_task = PubSubPublishMessageOperator(
