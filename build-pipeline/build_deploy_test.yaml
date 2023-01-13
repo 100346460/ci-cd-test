@@ -3,7 +3,7 @@ steps:
     args: ['clone', 'https://github.com/100346460/ci-cd-test.git']
     id: 'check-out-source-code'
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t','us-central1-docker.pkg.dev/${_GCP_PROJECT_ID}/ci-cd-dbt:latest', '.'] 
+    args: ['build', '-t','us-central1-docker.pkg.dev/${_GCP_PROJECT_ID}/ci-cd-test/ci-cd-dbt:latest', '.'] 
     dir: '$_REPO_NAME/dbt-source/dbt_project'
   - name: 'apache/airflow:slim-2.3.1-python3.7'
     entrypoint: 'python'
@@ -22,4 +22,4 @@ steps:
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'wait_for_dag_deployed'
   
-images: [us-central1-docker.pkg.dev/valid-hall-374418/ci-cd-dbt:latest]  
+images: [us-central1-docker.pkg.dev/valid-hall-374418/ci-cd-test/ci-cd-dbt:latest]  
