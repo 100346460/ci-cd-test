@@ -20,4 +20,4 @@ dbt_project:
       project: data-pipeline-prod
       threads: 1
       type: bigquery
-    target: dev
+  target: dev
