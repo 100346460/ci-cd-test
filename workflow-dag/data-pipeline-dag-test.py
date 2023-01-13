@@ -17,6 +17,7 @@ import datetime
 from base64 import b64encode
 from airflow import models
 from airflow.operators.python import PythonOperator
+from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.providers.google.cloud.operators.pubsub import PubSubPublishMessageOperator
 # from airflow.contrib.operators.dataflow_operator import PythonOperator
 
@@ -36,16 +37,26 @@ with models.DAG(
     'test_word_count',
     schedule_interval=None) as dag:
     python_task = PythonOperator(
-       task_id='execute_my_func',
-       python_callable=my_func,
-       start_date=yesterday
+    task_id='execute_my_func',
+    python_callable=my_func,
+    start_date=yesterday
+   )
+
+    dbt_run_task = KubernetesPodOperator(
+        task_id='dbt-run',
+        name='dbt-run',
+        namespace='default',
+        image='us-central1-docker.pkg.dev/data-pipeline-interactive/ci-cd-test/ci-cd-dbt:latest',
+        cmds=['/bin/bash',"-c","dbt run --profiles-dir ."],
+        image_pull_policy="Always",
+        get_logs=True
    )
   
     publish_task = PubSubPublishMessageOperator(
-      task_id='publish_test_complete',
-      project=project,
-      topic=pubsub_topic,
-      start_date=yesterday,
-      messages=[{'data': b64encode('successful'.encode())}]
+        task_id='publish_test_complete',
+        project=project,
+        topic=pubsub_topic,
+        start_date=yesterday,
+        messages=[{'data': b64encode('successful'.encode())}]
   )
-    python_task >> publish_task
+    python_task >> dbt_run_task >> publish_task
