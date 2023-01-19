@@ -13,8 +13,7 @@ gcloud projects add-iam-policy-binding $GCP_PROJECT_ID \
 # creates the Cloud Composer environment
 gcloud composer environments create $COMPOSER_ENV_NAME \
     --location $COMPOSER_REGION \
-    --image-version composer-2.0.14-airflow-2.2.5 \
-    --service-account "798244911630-compute@developer.gserviceaccount.com"
+    --image-version composer-2.0.14-airflow-2.2.5
 
 # set composer variables in the composer environment, variables are needed for the data-processing DAG
 COMPOSER_VAR_FILE=composer_variables.json

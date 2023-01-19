@@ -12,7 +12,7 @@ export BQ_DATASET_PROD="pipeline_${PROD}"
 
 export COMPOSER_REGION='us-central1'
 export COMPOSER_ZONE_ID='us-central1-a'
-export COMPOSER_ENV_NAME='data-pipeline-composer'
+export COMPOSER_ENV_NAME='data-pipeline-composer2'
 
 export SOURCE_CODE_REPO='ci-cd-test'
 export COMPOSER_DAG_NAME_TEST='ci-cd-dag-test'

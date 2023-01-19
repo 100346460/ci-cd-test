@@ -12,7 +12,7 @@ steps:
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'execute-basic-unit-tests'
   - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', 'data-pipeline-dag-test.py', 'gs://us-central1-data-pipeline-c-754e65cf-bucket/dags']
+    args: ['cp', 'data-pipeline-dag-test.py', 'gs://us-central1-data-pipeline-c-18fd8e26-bucket/dags']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
   - name: 'apache/airflow:slim-2.3.1-python3.7'

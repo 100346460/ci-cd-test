@@ -21,11 +21,6 @@ from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOpera
 from airflow.providers.google.cloud.operators.pubsub import PubSubPublishMessageOperator
 # from airflow.contrib.operators.dataflow_operator import PythonOperator
 
-project = models.Variable.get('gcp_project')
-region = models.Variable.get('gcp_region')
-zone = models.Variable.get('gcp_zone')
-pubsub_topic = models.Variable.get('pubsub_topic')
-
 yesterday = datetime.datetime.combine(
     datetime.datetime.today() - datetime.timedelta(1),
     datetime.datetime.min.time())
@@ -50,16 +45,8 @@ with models.DAG(
         image='us-central1-docker.pkg.dev/data-pipeline-interactive/ci-cd-test/ci-cd-dbt:latest',
         cmds=['/bin/bash',"-c","dbt deps"],
         image_pull_policy="Always",
-        service_account_name='798244911630-compute@developer.gserviceaccount.com',
         get_logs=True,
         start_date=yesterday
    )
-  
-    publish_task = PubSubPublishMessageOperator(
-        task_id='publish_test_complete',
-        project=project,
-        topic=pubsub_topic,
-        start_date=yesterday,
-        messages=[{'data': b64encode('successful'.encode())}]
-  )
-    python_task >> dbt_run_task >> publish_task
+
+    python_task >> dbt_run_task 
