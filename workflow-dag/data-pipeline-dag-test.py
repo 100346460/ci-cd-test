@@ -48,8 +48,9 @@ with models.DAG(
         name='dbt-run',
         namespace='default',
         image='us-central1-docker.pkg.dev/data-pipeline-interactive/ci-cd-test/ci-cd-dbt:latest',
-        cmds=['/bin/bash',"-c","dbt run --profiles-dir ."],
+        cmds=['/bin/bash',"-c","dbt deps"],
         image_pull_policy="Always",
+        service_account_name='798244911630-compute@developer.gserviceaccount.com',
         get_logs=True,
         start_date=yesterday
    )
