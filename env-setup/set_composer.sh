@@ -32,7 +32,6 @@ ${COMPOSER_ENV_NAME} \
 --location ${COMPOSER_REGION} \
 variables import -- /home/airflow/gcs/data/${COMPOSER_VAR_FILE}
 
-
 # create the dag bucket as an environment variable
 export COMPOSER_DAG_BUCKET=$(gcloud composer environments describe $COMPOSER_ENV_NAME \
     --location $COMPOSER_REGION \
