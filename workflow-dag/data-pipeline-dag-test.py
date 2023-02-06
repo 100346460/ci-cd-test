@@ -59,4 +59,4 @@ with models.DAG(
       start_date=yesterday
   )
 
-    python_task >> dbt_run_task 
+    python_task >> dbt_run_task >> publish_task
