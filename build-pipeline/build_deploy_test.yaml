@@ -7,6 +7,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t','us-central1-docker.pkg.dev/${_GCP_PROJECT_ID}/ci-cd-test/ci-cd-dbt:latest', '.'] 
     dir: '$_REPO_NAME/dbt-source/dbt_project'
+    id: 'build the image'
   # run basic validation on business logic to be executed by the DAG
   - name: 'apache/airflow:slim-2.3.1-python3.7'
     entrypoint: 'python'
@@ -16,7 +17,7 @@ steps:
     id: 'execute-basic-unit-tests'
   # copy the DAG file to the DAG folder
   - name: gcr.io/cloud-builders/gsutils
-    args: ['cp', 'data-pipeline-dag-test.py', '${_COMPOSER_DAG_BUCKET}']
+    args: ['cp', 'data-pipeline-dag-test.py', 'gs://${_COMPOSER_DAG_BUCKET}']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
   # wait for the DAG to be copied
