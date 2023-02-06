@@ -16,7 +16,7 @@ steps:
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'execute-basic-unit-tests'
   # copy the DAG file to the DAG folder
-  - name: gcr.io/cloud-builders/gsutils
+  - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'data-pipeline-dag-test.py', 'gs://${_COMPOSER_DAG_BUCKET}']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
