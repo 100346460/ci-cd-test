@@ -1,5 +1,5 @@
 {
-  "gcp_project": "data-pipeline-interacive",
+  "gcp_project": "data-pipeline-interactive",
   "gcp_region": "us-central1",
   "gcp_zone": "us-central1-a",
   "pubsub_topic": "integration-test-complete-topic",
