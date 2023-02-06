@@ -16,7 +16,7 @@ steps:
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'execute-basic-unit-tests'
   # copy the DAG file to the DAG folder
-  - name: gcr.io/cloud-builders/gsutil
+  - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', 'data-pipeline-dag-test.py', '${_COMPOSER_DAG_BUCKET}']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
@@ -28,7 +28,7 @@ steps:
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'wait_for_dag_deployed'
   # trigger the DAG
-  - name: gcr.io/cloud-builders/gcloud
+  - name: 'gcr.io/cloud-builders/gcloud'
     args: ['composer', 'environments', 'run', '${_COMPOSER_ENV_NAME}', '--location', '${_COMPOSER_REGION}', 'dags', 'trigger', '--', '${_COMPOSER_DAG_NAME_TEST}', '--run-id=$BUILD_ID']
     id: 'trigger-pipeline-execution'
   
