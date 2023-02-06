@@ -22,6 +22,7 @@ from airflow.providers.google.cloud.operators.pubsub import PubSubPublishMessage
 # from airflow.contrib.operators.dataflow_operator import PythonOperator
 
 pubsub_topic = models.Variable.get('pubsub_topic')
+project = models.Variable.get('gcp_project')
 
 yesterday = datetime.datetime.combine(
     datetime.datetime.today() - datetime.timedelta(1),
