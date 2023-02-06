@@ -16,7 +16,7 @@ steps:
     id: 'execute-basic-unit-tests'
   # copy the DAG file to the DAG folder
   - name: gcr.io/cloud-builders/gsutils
-    args: ['cp', 'data-pipeline-dag-test.py', 'gs://us-central1-data-pipeline-c-18fd8e26-bucket/dags']
+    args: ['cp', 'data-pipeline-dag-test.py', '${_COMPOSER_DAG_BUCKET}']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
   # wait for the DAG to be copied

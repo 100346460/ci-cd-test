@@ -5,4 +5,4 @@
   "pubsub_topic": "integration-test-complete-topic",
   "bq_dataset_test": "pipeline_test",
   "bq_dataset_prod": "pipeline_prod"
-}s
+}
