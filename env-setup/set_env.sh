@@ -14,6 +14,6 @@ export COMPOSER_ZONE_ID='us-central1-a'
 export COMPOSER_ENV_NAME='data-pipeline-composer2'
 
 export SOURCE_CODE_REPO='ci-cd-test'
-export COMPOSER_DAG_NAME_TEST='ci-cd-dag-test'
+export COMPOSER_DAG_NAME_TEST='test-dbt-dag'
 export COMPOSER_DAG_NAME_PROD='ci-cd-dag-prod'
 echo   "Environment variables set up."
