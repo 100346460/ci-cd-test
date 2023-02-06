@@ -4,7 +4,6 @@ export TEST='test'
 export GCP_PROJECT_ID="${projectid}"
 export PROJECT_NUMBER=$(gcloud projects describe "${GCP_PROJECT_ID}" --format='get(projectNumber)')
 export BQ_DATASET_TEST="pipeline_${TEST}"
-gcloud config set project "${GCP_PROJECT_ID}"
 
 export PUBSUB_TOPIC='integration-test-complete-topic'
 export PROD='prod'

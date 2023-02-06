@@ -1,25 +1,34 @@
 steps:
-  - name: gcr.io/cloud-builders/git
+  # clone the repository
+  - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/100346460/ci-cd-test.git']
     id: 'check-out-source-code'
+  # build the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t','us-central1-docker.pkg.dev/${_GCP_PROJECT_ID}/ci-cd-test/ci-cd-dbt:latest', '.'] 
     dir: '$_REPO_NAME/dbt-source/dbt_project'
+  # run basic validation on business logic to be executed by the DAG
   - name: 'apache/airflow:slim-2.3.1-python3.7'
     entrypoint: 'python'
     args: ['test_basic_unittest.py']
     dir: '$_REPO_NAME/workflow-dag'
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'execute-basic-unit-tests'
-  - name: gcr.io/cloud-builders/gsutil
+  # copy the DAG file to the DAG folder
+  - name: gcr.io/cloud-builders/gsutils
     args: ['cp', 'data-pipeline-dag-test.py', 'gs://us-central1-data-pipeline-c-18fd8e26-bucket/dags']
     dir: '$_REPO_NAME/workflow-dag'
     id: 'deploy-processing-pipeline'
+  # wait for the DAG to be copied
   - name: 'apache/airflow:slim-2.3.1-python3.7'
     entrypoint: 'python'
     args: ['wait_for_dag_deployed.py']
     dir: '$_REPO_NAME/build-pipeline'
     env: ['PYTHONPATH=/home/airflow/.local/lib/python3.7/site-packages']
     id: 'wait_for_dag_deployed'
+  # trigger the DAG
+  - name: gcr.io/cloud-builders/gcloud
+    args: ['composer', 'environments', 'run', '${_COMPOSER_ENV_NAME}', '--location', '${_COMPOSER_REGION}', 'dags', 'trigger', '--', '${_COMPOSER_DAG_NAME_TEST}', '--run-id=$BUILD_ID']
+    id: 'trigger-pipeline-execution'
   
 images: [us-central1-docker.pkg.dev/$_GCP_PROJECT_ID/ci-cd-test/ci-cd-dbt:latest]  
